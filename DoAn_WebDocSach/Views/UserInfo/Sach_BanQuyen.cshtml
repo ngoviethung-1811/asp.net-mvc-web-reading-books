@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Sach_BanQuyen";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .customer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .customer-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+        .customer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .customer-name {
+        font-size: 30px;
+        margin: 0;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .customer-email {
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class="content_page" style="background-color: ghostwhite; padding: 10px;">
+        <div class="customer-info">
+            <div class="customer-image">
+                <img src="~/Images/@ViewBag.anh" alt="Avatar" />
+            </div>
+            <div class="customer-details">
+                <h2 class="customer-name">@ViewBag.tenKH</h2>
+                <p class="customer-email">@ViewBag.email</p>
+            </div>
+            <div style="width:80%; margin:0 auto;">
+                <div class='mg-tb-15'>
+                    <div class='line'></div>
+                </div>
+                @foreach (var sach in ViewBag.DSSachBQ)
+                {
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <a href="@Url.Action("ViewBookInfo", "UserSach", new { id = sach.maSach })">
+                                <img src='~/Images/@sach.anhBia' style="width: 100%;">
+                            </a>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                            <a href="@Url.Action("ViewBookInfo", "UserSach", new { id = sach.maSach })">
+                                <h1 class='tblue fs-20'>@sach.tenSach</h1>
+                            </a>
+                            <div class='mg-t-10'>Tác giả:  @sach.tacGia</div>
+                            <div class='mg-tb-10'>
+                                Thể loại:
+                                <a class='tblue' href="@Url.Action("Sach_TheLoai", "UserSach", new { maTheLoai = sach.theLoai.maTheLoai })">
+                                    @sach.theLoai.tenTheLoai
+                                </a>
+                            </div>
+                            <div class='mg-tb-10'>
+                                Loại:
+                                <a class='tblue' href="@Url.Action("TimKiem_SachLoai", "UserSach", new { loai = 2 })">
+                                    <span>Bản quyền</span>
+                                </a>
+                            </div>
+                            <div class='mg-tb-10'>
+                                Giá mua: <span>@sach.gia</span>
+                            </div>
+                            <div class='mg-tb-10'>
+                                Thời gian mua: <span>@sach.thoiGian</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class='mg-tb-15'>
+                        <div class='line'></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

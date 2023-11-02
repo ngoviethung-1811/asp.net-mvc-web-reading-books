@@ -1,0 +1,168 @@
+﻿@model DoAn_WebDocSach.Models.GiaoDichViewModel
+@{
+    int i = 0;
+    int j = 0;
+}
+
+<link href="~/Content/InBCDT.css" rel="stylesheet" />
+<title>Bản in</title>
+
+<table id='tb_main_title' style='border-collapse: collapse;' name='tb_main_title' width='900' class="table-print-title">
+    <tr>
+        <th align='left' class='bold' style="font-size:15px;">
+            Trung tâm sách Tân Tiến - SachHay
+        </th>
+    </tr>
+    <tr>
+        <td align='left'>
+            11 Lê Thành Phương, Vạn Thắng, Nha Trang
+        </td>
+    </tr>
+    <tr>
+        <td align='left'>
+            Điện thoại: 0258 3827 303
+        </td>
+    </tr>
+    <tr>
+        <th align='center' class='bold main_title' style='height:35px'>
+            BÁO CÁO DOANH THU
+        </th>
+    </tr>
+    <tr>
+        <td align='left'>
+            @if (ViewBag.TrungTG)
+            {
+                <p>Thời gian: @ViewBag.month1/@ViewBag.year1</p>
+            }
+            else
+            {
+                <p>Thời gian: @ViewBag.month1/@ViewBag.year1-@ViewBag.month2/@ViewBag.year2</p>
+            }
+        </td>
+    </tr>
+</table>
+<br />
+<div style="text-align:center;font-size:15px;font-weight:bold;margin:10px   ">  DANH SÁCH THEO KHÁCH HÀNG MUA SÁCH</div>
+<table id='tb_main_body' style='border-collapse: collapse;' name='tb_main_body' width='900' class="table-print" border="1">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Thời gian
+        </th>
+        <th>
+            Khánh hàng
+        </th>
+        <th>
+            Tên sách
+        </th>
+        <th>
+            Giá
+        </th>
+    </tr>
+
+    @foreach (var item in Model.ListGDS)
+    {
+        <tr>
+            <td align="center">
+                @{i++;}
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.thoiGian)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KHACHHANG.tenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SACH.tenSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gia)
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<div class="tong">
+    <table style="border: none;" width='300' class="table-print">
+        <tr>
+            <td>Tổng</td>
+            <td style="border: none;"><strong>@string.Format("{0:#,##0}", ViewBag.TongGDS)</strong></td>
+        </tr>
+    </table>
+</div>
+
+<div style="text-align:center;font-size:15px;font-weight:bold;margin:10px">  DANH SACH KHÁCH HÀNG MUA VIP</div>
+<table id='tb_main_body' style='border-collapse: collapse;' name='tb_main_body' width='900' class="table-print" border="1">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Thời gian
+        </th>
+        <th>
+            Khánh hàng
+        </th>
+        <th>
+            Giá VIP
+        </th>
+    </tr>
+
+    @foreach (var item in Model.ListGDV)
+    {
+        <tr>
+            <td align="center">
+                @{j++;}
+                @j
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.thoiGian)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KHACHHANG.tenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.giaVIP)
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<div class=" tong">
+    <table style="border: none;" width='300' class="table-print">
+        <tr>
+            <td>Tổng</td>
+            <td style="border: none;"><strong>@string.Format("{0:#,##0}", ViewBag.TongGDS)</strong></td>
+        </tr>
+    </table>
+</div>
+<div class="tong">
+    <table style="border: none;" width='300' class="table-print">
+        <tr>
+            <td style="font-size:20px">Tổng doanh thu:</td>
+            <td style="border: none; font-size: 20px"><strong>@string.Format("{0:#,##0}", ViewBag.TongDoanhThu)</strong></td>
+        </tr>
+    </table>
+</div>
+
+@{
+    var ngayIn = " ngày " + DateTime.Now.Day.ToString() + " tháng " + DateTime.Now.Month.ToString() + " năm " + DateTime.Now.Year.ToString();
+}
+<br />
+<table id='tb_footer' name='tb_footer' width='700' border="0" class="fixheader">
+    <tr>
+        <td align='left' width='30%'></td>
+        <td align='center' width='30%'></td>
+        <td align='center' class='sign italic'>
+            Khánh Hòa, @ngayIn
+        </td>
+    </tr>
+    <tr>
+        <td align='center' width='30%' class='bold'></td>
+        <td align='center' width='30%' class='bold'></td>
+        <td align='center' class='bold'>Người lập báo cáo</td>
+    </tr>
+</table>

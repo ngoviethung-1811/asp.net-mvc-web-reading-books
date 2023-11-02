@@ -1,0 +1,208 @@
+﻿@model IEnumerable<DoAn_WebDocSach.Models.SACH>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .book-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
+    }
+
+    .book-item {
+        text-align: center;
+    }
+
+    .book-item img {
+        width:100%;
+        height: 80%;
+    }
+
+    .book-title {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a,
+    .pagination span {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 0 3px;
+        color: #333;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .pagination a:hover {
+        background-color: #f5f5f5;
+    }
+
+    .pagination span {
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #337ab7;
+        cursor: default;
+    }
+
+        .pagination .page-link {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 3px;
+            color: #333;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+            .pagination .page-link:hover {
+                background-color: #f5f5f5;
+            }
+
+            .pagination .page-link.active {
+                color: #fff;
+                background-color: #337ab7;
+                border-color: #337ab7;
+                cursor: default;
+            }
+
+        .pagination .prev,
+        .pagination .next {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 3px;
+            color: #fff;
+            background-color: #337ab7;
+            border: 1px solid #337ab7;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+            .pagination .prev:hover,
+            .pagination .next:hover {
+                background-color: #23527c;
+                border-color: #23527c;
+            }
+
+            .pagination .prev:disabled,
+            .pagination .next:disabled {
+                opacity: 0.5;
+                cursor: default;
+            }
+
+        .pagination .prev {
+            margin-right: 10px;
+        }
+
+        .pagination .next {
+            margin-left: 10px;
+        }
+        .pagination .page-link.disabled-link {
+            color: #999;
+            background-color: #f5f5f5;
+            border-color: #ddd;
+        }
+    .book-grid-hotbook {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class="content_page">
+        <h1 class="title_page" style="background-color: green;">⭐️ Sách HOT ⭐️</h1>
+        <div class='mg-b-30'></div>
+        <div class="book-grid-hotbook">
+            @foreach (var sachHot in ViewBag.DSSachHot)
+            {
+                <div class="book-item">
+                    <a href="@Url.Action("ViewBookInfo", "UserSach", new { id = sachHot.maSach })">
+                        <img src="~/Images/@sachHot.anhBia" alt="@sachHot.tenSach" />
+                        <div class="book-title">@sachHot.tenSach</div>
+                        <div style="text-align: center;">&#128065; @sachHot.soLuotXem</div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="line"></div>
+    <br />
+    <div>
+        <div class='content_page'>
+            <h1 class="title_page">Sách</h1>
+            <div class='pd-lr-20'>
+                <div class='mg-b-30'></div>
+                <div class="row r_10">
+                    <div class="book-grid">
+                        @foreach (var sach in Model)
+                        {
+                            <div class="book-item">
+                                <a href="@Url.Action("ViewBookInfo", "UserSach", new { id = sach.maSach })">
+                                    <img src="~/Images/@sach.anhBia" alt="@sach.tenSach" />
+                                    <div class="book-title">@sach.tenSach</div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <div class="pagination">
+                        <a class="page-link prev" href="#" onclick="prevPage()">&lt;</a>
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            if (i == ViewBag.PageNumber)
+                            {
+                                <span>@i</span>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index", new { page = i, listSach = Model })">@i</a>
+                            }
+                        }
+                        <a class="page-link next" href="#" onclick="nextPage()">&gt;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var prevLink = document.querySelector('.page-link.prev');
+    var nextLink = document.querySelector('.page-link.next');
+
+    if (@ViewBag.PageNumber == 1) {
+        prevLink.removeAttribute('href');
+        prevLink.removeAttribute('onclick');
+        prevLink.classList.add('disabled');
+        prevLink.classList.add('disabled-link');
+    }
+    if (@ViewBag.PageNumber == @ViewBag.TotalPages) {
+        nextLink.removeAttribute('href');
+        nextLink.removeAttribute('onclick');
+        nextLink.classList.add('disabled');
+        nextLink.classList.add('disabled-link');
+    }
+
+    function prevPage() {
+        if (@ViewBag.PageNumber > 1) {
+            window.location.href = '@Url.Action("Index", new { page = @ViewBag.PageNumber - 1, listSach = Model })';
+        }
+    }
+
+    function nextPage() {
+        if (@ViewBag.PageNumber < @ViewBag.TotalPages) {
+            window.location.href = '@Url.Action("Index", new { page = @ViewBag.PageNumber + 1, listSach = Model })';
+        }
+    }
+</script>

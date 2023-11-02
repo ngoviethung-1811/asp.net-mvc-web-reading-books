@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "ViewBookInfo";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .disabled {
+        opacity: 0.5;
+        color: gray;
+    }
+</style>
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <div>
+                <center>
+                    <a href="/UserHome/Index" target="_blanks">
+                        <img src="~/Images/layout_user_header_img.jpg" />
+                    </a>
+                </center>
+            </div>
+            <br />
+            <div class='content_page pd-20'>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <img src='~/Images/@Model.anhBia' style="width: 100%; height:100%;">
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                        <h1 class='tblue fs-20'>@Model.tenSach</h1>
+                        <div class='mg-t-10'>Tác giả:  @Model.tacgia</div>
+                        <div class='mg-t-10'>Năm xuất bản:  @Model.namXuatBan</div>
+                        <div class='mg-tb-10'>
+                            Thể loại:
+                            <a class='tblue' href="@Url.Action("Sach_TheLoai", "UserSach", new { maTheLoai = Model.maTheLoai })">
+                                @Model.THELOAI.tenTheLoai
+                            </a>
+                        </div>
+                        <div class='mg-tb-10'>
+                            Loại:
+                            <a class='tblue' href="@Url.Action("TimKiem_SachLoai", "UserSach", new { loai = Model.loai })">
+                                @if (Model.loai == 0)
+                                {
+                                    <span>Thường</span>
+                                }
+                                else if (Model.loai == 1)
+                                {
+                                    <span>VIP</span>
+                                }
+                                else
+                                {
+                                    <span>Bản quyền</span>
+                                }
+                            </a>
+                        </div>
+                        <div class='mg-tb-10'>
+                            &#128065; @ViewBag.SoLuotXem
+                        </div>
+                        <div class='mg-tb-10'>
+                            @if (ViewBag.CanAccess == true)
+                            {
+                                <i>&nbsp;</i>
+                            }
+                            else
+                            {
+                                if (ViewBag.LoaiSach == 1)
+                                {
+                                    <i>Nâng cấp tài khoản VIP để có thể đọc toàn bộ nội dung</i>
+                                }
+                                else
+                                {
+                                    <i>Mua sách để có thể đọc toàn bộ nội dung</i>
+                                }
+                            }
+                        </div>
+                        <div>
+                            @if (ViewBag.NDSach.Count != 0)
+                            {
+                                <a target='_blank' class='button readonline' href='@Url.Action("ReadBook", "UserSach", new { maSach = Model.maSach, maChuong = "MC001" })'>
+                                    Đọc Online
+                                </a>
+                                if (ViewBag.LoaiSach == 2)
+                                {
+                                    if (ViewBag.CanAccess == false)
+                                    {
+                                        <a class='button' style="background-color: darkgreen" href='@Url.Action("MuaSach", "UserSach", new { maSach = Model.maSach })'>
+                                            Mua sách
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class='button disabled' style="background-color: gray; color: white;">
+                                            Đã mua
+                                        </a>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <a class='button disabled'>
+                                    Đọc Online
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class='mg-tb-15'>
+                    <div class='line'></div>
+                </div>
+                <div class='box_chhr'></div>
+                <div class='content_p content_p_al'>
+                    <div class="gioi_thieu_sach text-justify" style="white-space: pre-line;">
+                        @Model.moTa
+                    </div>
+                    <hr>
+                </div>
+                @if (ViewBag.NDSach.Count != 0)
+                {
+                    <div class='box_chhr'>
+                        <h3 class='pd-b-10'>Danh sách chương</h3>
+                        <div class='line mg-b-10'></div>
+                        @foreach (var chuong in ViewBag.NDSach)
+                        {
+                            <div class='item_ch_mora'>
+                                <div class='item_ch'>
+                                    @if (ViewBag.CanAccess == true)
+                                    {
+                                        <a target="_blank" href='@Url.Action("ReadBook", "UserSach", new { maSach = Model.maSach, maChuong = chuong.maChuong })'>@chuong.tenChuong</a>
+                                    }
+                                    else
+                                    {
+                                        if (chuong.maChuong == "MC001")
+                                        {
+                                            <a target="_blank" href='@Url.Action("ReadBook", "UserSach", new { maSach = Model.maSach, maChuong = chuong.maChuong })'>@chuong.tenChuong</a>
+                                        }
+                                        else
+                                        {
+                                            <a target="_blank" style="color: #ccc" href='@Url.Action("ReadBook", "UserSach", new { maSach = Model.maSach, maChuong = chuong.maChuong })'>@chuong.tenChuong</a>
+                                        }
+                                    }
+                                </div>
+                                <hr>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class=''>
+                <center>
+                    <a href="/UserHome/Index" target="_blanks">
+                        <img src="~/Images/layout_user_header_img2.jpg" />
+                    </a>
+                </center>
+            </div>
+            <br />
+            <div class='content_page'>
+                <div class="title_page">Thể Loại Sách</div>
+                @foreach (var theLoai in ViewBag.DanhSachTheLoai)
+                {
+                    <div class='item_folder_sidebar'>
+                        <a href="@Url.Action("Sach_TheLoai", "UserSach", new { maTheLoai = theLoai.maTheLoai })">
+                            @theLoai.tenTheLoai
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

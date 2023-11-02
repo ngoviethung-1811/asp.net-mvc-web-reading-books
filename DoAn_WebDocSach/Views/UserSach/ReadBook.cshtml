@@ -1,0 +1,133 @@
+﻿@model DoAn_WebDocSach.Models.NOIDUNGSACH
+
+@{
+    ViewBag.Title = "ReadBook";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<style>
+    .disabled {
+        opacity: 0.5;
+        color: gray;
+    }
+</style>
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class='content_page content_page_online'>
+        <div class="text-center">
+            <h1 class='tblue mg-t-15'>
+                <a href='@Url.Action("ViewBookInfo", "UserSach", new { id = Model.maSach })'>@ViewBag.Sach.tenSach</a>
+            </h1>
+            <h2 class='mg-t-10'>@Model.tenChuong</h2>
+            <div class='mg-t-10'>Tác giả:  @ViewBag.Sach.tacgia</div>
+            <div class='mg-tb-10'>
+                Thể loại: <a href='@Url.Action("Sach_TheLoai", "UserSach", new { maTheLoai = ViewBag.Sach.maTheLoai })' class='tblue'>@ViewBag.Sach.THELOAI.tenTheLoai</a>
+            </div>
+        </div>
+        <div class='line'></div>
+        <div class='text-center mg-tb-30'>
+            @if (ViewBag.prevChapter != null)
+            {
+                <a class='controll_btn' href="@Url.Action("ReadBook", "UserSach", new { maSach = ViewBag.prevChapter.maSach, maChuong = ViewBag.prevChapter.maChuong })">
+                    <
+                </a>
+            }
+            else
+            {
+                <a class='controll_btn disabled'>
+                    <
+                </a>
+            }
+            <div class='box_dropdown'>
+                <a class='nav_ck'>
+                    Chọn tập &darr;
+                </a>
+                <ul>
+                    @foreach (var chuong in ViewBag.dsChuong)
+                    {
+                        var activeClass = (Model.maChuong == chuong.maChuong) ? "active_a" : "";
+                        <li>
+                            <a class="@activeClass" href="@Url.Action("ReadBook", "UserSach", new { maSach = Model.maSach, maChuong = chuong.maChuong })">@chuong.tenChuong</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            @if (ViewBag.nextChapter != null)
+            {
+                <a class='controll_btn' href="@Url.Action("ReadBook", "UserSach", new { maSach = ViewBag.nextChapter.maSach, maChuong = ViewBag.nextChapter.maChuong })">
+                    >
+                </a>
+            }
+            else
+            {
+                <a class='controll_btn disabled'>
+                    >
+                </a>
+            }
+        </div>
+        <div class='pd-lr-30'>
+            <div class='content_p fs-16 content_p_al'>
+                <div style="white-space: pre-line;">
+                    @if (ViewBag.CanAccess == true)
+                    {
+                        @Model.noiDung
+                    }
+                    else
+                    {
+                        <div style="text-align: center;">
+                            @if (ViewBag.LoaiSach == 1)
+                            {
+                            <i>Nội dung này dành riêng cho các tài khoản VIP</i>
+                            }
+                            else
+                            {
+                            <i>Nội dung này dành riêng cho các tài khoản đã mua sách</i>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class='text-center mg-tb-15'></div>
+        <div class='text-center mg-tb-30'>
+            @if (ViewBag.prevChapter != null)
+            {
+                <a class='controll_btn' href="@Url.Action("ReadBook", "UserSach", new { maSach = ViewBag.prevChapter.maSach, maChuong = ViewBag.prevChapter.maChuong })">
+                    <
+                </a>
+            }
+            else
+            {
+                <a class='controll_btn disabled'>
+                    <
+                </a>
+            }
+            <div class='box_dropdown'>
+                <a class='nav_ck'>
+                    Chọn tập &darr;
+                </a>
+                <ul>
+                    @foreach (var chuong in ViewBag.dsChuong)
+                    {
+                        var activeClass = (Model.maChuong == chuong.maChuong) ? "active_a" : "";
+                        <li>
+                            <a class="@activeClass" href="@Url.Action("ReadBook", "UserSach", new { maSach = Model.maSach, maChuong = chuong.maChuong })">@chuong.tenChuong</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            @if (ViewBag.nextChapter != null)
+            {
+                <a class='controll_btn' href="@Url.Action("ReadBook", "UserSach", new { maSach = ViewBag.nextChapter.maSach, maChuong = ViewBag.nextChapter.maChuong })">
+                    >
+                </a>
+            }
+            else
+            {
+                <a class='controll_btn disabled'>
+                    >
+                </a>
+            }
+        </div>
+    </div>
+</div>

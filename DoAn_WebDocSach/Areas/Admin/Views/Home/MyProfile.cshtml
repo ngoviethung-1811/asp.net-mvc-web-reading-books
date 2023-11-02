@@ -1,0 +1,72 @@
+﻿@model DoAn_WebDocSach.Models.NHANVIEN
+
+@{
+    ViewBag.Title = "MyProfile";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    string gtinh = "";
+}
+
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background-color: #f2f2f2;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            margin: 0;
+            color: black;
+        }
+
+        th {
+            padding: 8px;
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<h4 style="color:black;text-align:center">Thông tin chi tiết</h4>
+<table border="1" cellpadding="0" cellspacing="0" style="font-size:14px;margin-left:50px;">
+    <tr>
+        <td>
+            <table cellpadding="2" cellspacing="10">
+                <tr>
+                    <td rowspan="5" style="text-align:center"><img src="/Images/@Html.DisplayFor(model => model.avatar)" width="150" height="150" " /></td>
+                    <td>Mã nhân viên:</td>
+                    <td>@Html.DisplayFor(model => model.maNV)</td>
+                </tr>
+                <tr>
+                    <td>Tên nhân viên:</td>
+                    <td>@Html.DisplayFor(model => model.tenNV)</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>@Html.DisplayFor(model => model.email)</td>
+                </tr>
+                <tr>
+                    <td>Admin:</td>
+                    <td>
+                        @{if (Model.isAdmin == true)
+                            {
+                                gtinh = "<i class='fas fa-check'></i>";
+                            }
+                            else
+                            {
+                                gtinh = "";
+                            }
+                        }
+                        @Html.Raw(gtinh)
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<div>
+    @Html.ActionLink("Quay lại", "Index")
+</div>

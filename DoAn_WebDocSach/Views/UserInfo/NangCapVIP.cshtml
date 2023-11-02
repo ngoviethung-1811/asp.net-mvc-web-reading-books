@@ -1,0 +1,201 @@
+﻿@model DoAn_WebDocSach.Common.TheNganHang
+
+@{
+    ViewBag.Title = "NangCapVIP";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .form-input {
+        position: relative;
+        flex: 1;
+    }
+
+        .form-input .form-control {
+            float: right;
+            width: 500px;
+            padding: 12px;
+            margin-bottom: 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .form-input .form-file {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .text-danger {
+        margin-left: 10px;
+        color: #ff0000;
+    }
+
+    h3 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .purchase-info {
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        margin: 0 auto;
+        text-align: center;
+        width: 70%;
+    }
+
+    .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .col-md-3 {
+        flex-basis: 25%;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .col-md-9 {
+        flex-basis: 75%;
+        text-align: right;
+    }
+
+    .customer-actions {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        width: 30%;
+        margin: 0 auto;
+    }
+
+    .btn-confirm {
+        padding: 10px 20px;
+        background-color: #008CBA;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        min-width: 100px;
+    }
+
+        .btn-confirm:hover {
+            background-color: gray;
+            color: white;
+        }
+</style>
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class="content_page" style="background-color: ghostwhite; padding: 10px;">
+        <h3>Thông tin giao dịch</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoThe, htmlAttributes: new { @class = "form-label" })
+                <div class="form-input">
+                    @Html.EditorFor(model => model.SoThe, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SoThe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenChuThe, htmlAttributes: new { @class = "form-label" })
+                <div class="form-input">
+                    @Html.EditorFor(model => model.TenChuThe, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenChuThe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NgayPhatHanh, htmlAttributes: new { @class = "form-label" })
+                <div class="form-input">
+                    @Html.EditorFor(model => model.NgayPhatHanh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NgayPhatHanh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SDT, htmlAttributes: new { @class = "form-label" })
+                <div class="form-input">
+                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        <br />
+        <div class="purchase-info">
+            <div class="row">
+                <div class="col-md-3">Tên khách hàng:</div>
+                <div class="col-md-9">@ViewBag.TenKH</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Thời gian:</div>
+                <div class="col-md-9">@ViewBag.ThoiGian</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Giá VIP:</div>
+                <div class="col-md-9">@ViewBag.Gia.ToString("N0") VND</div>
+            </div>
+        </div>
+        <br />
+        <div class="customer-actions">
+            <a href="#" class="btn-confirm">Thanh toán</a>
+        </div>
+    </div>
+</div>
+
+<form id="comfirm-form" action="@Url.Action("XacNhanNangCapVIP", "UserInfo")" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    const confirmButton = document.querySelector('.btn-confirm');
+
+    confirmButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Xác nhận thanh toán',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Thanh toán',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('comfirm-form').submit();
+            }
+        });
+    });
+</script>

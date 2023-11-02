@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WEBDOCSACHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="GIAODICH_MUASACH">
+    <Key>
+      <PropertyRef Name="maKH" />
+      <PropertyRef Name="maSach" />
+    </Key>
+    <Property Name="maKH" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="maSach" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="gia" Type="money" Nullable="false" />
+    <Property Name="thoiGian" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GIAODICH_MUAVIP">
+    <Key>
+      <PropertyRef Name="maKH" />
+      <PropertyRef Name="thoiGian" />
+    </Key>
+    <Property Name="maKH" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="thoiGian" Type="date" Nullable="false" />
+    <Property Name="giaVIP" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KHACHHANG">
+    <Key>
+      <PropertyRef Name="maKH" />
+    </Key>
+    <Property Name="maKH" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="tenKH" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="avatar" Type="nvarchar(max)" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="matKhau" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="isVIP" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KHACHHANG_SACHTHEODOI">
+    <Key>
+      <PropertyRef Name="maKH" />
+      <PropertyRef Name="maSach" />
+    </Key>
+    <Property Name="maKH" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="maSach" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NHANVIEN">
+    <Key>
+      <PropertyRef Name="maNV" />
+    </Key>
+    <Property Name="maNV" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="tenNV" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="avatar" Type="nvarchar(max)" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="matKhau" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NOIDUNGSACH">
+    <Key>
+      <PropertyRef Name="maSach" />
+      <PropertyRef Name="maChuong" />
+    </Key>
+    <Property Name="maSach" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="maChuong" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="tenChuong" Type="nvarchar" MaxLength="50" />
+    <Property Name="noiDung" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SACH">
+    <Key>
+      <PropertyRef Name="maSach" />
+    </Key>
+    <Property Name="maSach" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="maTheLoai" Type="varchar" MaxLength="5" />
+    <Property Name="tenSach" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="anhBia" Type="nvarchar(max)" />
+    <Property Name="tacgia" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="loai" Type="int" Nullable="false" />
+    <Property Name="gia" Type="money" Nullable="false" />
+    <Property Name="namXuatBan" Type="int" Nullable="false" />
+    <Property Name="moTa" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="THELOAI">
+    <Key>
+      <PropertyRef Name="maTheLoai" />
+    </Key>
+    <Property Name="maTheLoai" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="tenTheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__GIAODICH___maSac__693CA210">
+    <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
+    <End Role="GIAODICH_MUASACH" Type="Self.GIAODICH_MUASACH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SACH">
+        <PropertyRef Name="maSach" />
+      </Principal>
+      <Dependent Role="GIAODICH_MUASACH">
+        <PropertyRef Name="maSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GIAODICH_M__maKH__1CF15040">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+    <End Role="GIAODICH_MUAVIP" Type="Self.GIAODICH_MUAVIP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="maKH" />
+      </Principal>
+      <Dependent Role="GIAODICH_MUAVIP">
+        <PropertyRef Name="maKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GIAODICH_M__maKH__68487DD7">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+    <End Role="GIAODICH_MUASACH" Type="Self.GIAODICH_MUASACH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="maKH" />
+      </Principal>
+      <Dependent Role="GIAODICH_MUASACH">
+        <PropertyRef Name="maKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__KHACHHANG___maKH__6383C8BA">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+    <End Role="KHACHHANG_SACHTHEODOI" Type="Self.KHACHHANG_SACHTHEODOI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="maKH" />
+      </Principal>
+      <Dependent Role="KHACHHANG_SACHTHEODOI">
+        <PropertyRef Name="maKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__KHACHHANG__maSac__6477ECF3">
+    <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
+    <End Role="KHACHHANG_SACHTHEODOI" Type="Self.KHACHHANG_SACHTHEODOI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SACH">
+        <PropertyRef Name="maSach" />
+      </Principal>
+      <Dependent Role="KHACHHANG_SACHTHEODOI">
+        <PropertyRef Name="maSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NOIDUNGSA__maSac__60A75C0F">
+    <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
+    <End Role="NOIDUNGSACH" Type="Self.NOIDUNGSACH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SACH">
+        <PropertyRef Name="maSach" />
+      </Principal>
+      <Dependent Role="NOIDUNGSACH">
+        <PropertyRef Name="maSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SACH__maTheLoai__5DCAEF64">
+    <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="0..1" />
+    <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="THELOAI">
+        <PropertyRef Name="maTheLoai" />
+      </Principal>
+      <Dependent Role="SACH">
+        <PropertyRef Name="maTheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="KhachHang_TimKiem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maKH" Type="varchar" Mode="In" />
+    <Parameter Name="tenKH" Type="nvarchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="isVIP" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="NhanVien_TimKiem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="maNV" Type="varchar" Mode="In" />
+    <Parameter Name="tenNV" Type="nvarchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="isAdmin" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="WEBDOCSACHModelStoreContainer">
+    <EntitySet Name="GIAODICH_MUASACH" EntityType="Self.GIAODICH_MUASACH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GIAODICH_MUAVIP" EntityType="Self.GIAODICH_MUAVIP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KHACHHANG_SACHTHEODOI" EntityType="Self.KHACHHANG_SACHTHEODOI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NOIDUNGSACH" EntityType="Self.NOIDUNGSACH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SACH" EntityType="Self.SACH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="THELOAI" EntityType="Self.THELOAI" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__GIAODICH___maSac__693CA210" Association="Self.FK__GIAODICH___maSac__693CA210">
+      <End Role="SACH" EntitySet="SACH" />
+      <End Role="GIAODICH_MUASACH" EntitySet="GIAODICH_MUASACH" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GIAODICH_M__maKH__1CF15040" Association="Self.FK__GIAODICH_M__maKH__1CF15040">
+      <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+      <End Role="GIAODICH_MUAVIP" EntitySet="GIAODICH_MUAVIP" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GIAODICH_M__maKH__68487DD7" Association="Self.FK__GIAODICH_M__maKH__68487DD7">
+      <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+      <End Role="GIAODICH_MUASACH" EntitySet="GIAODICH_MUASACH" />
+    </AssociationSet>
+    <AssociationSet Name="FK__KHACHHANG___maKH__6383C8BA" Association="Self.FK__KHACHHANG___maKH__6383C8BA">
+      <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+      <End Role="KHACHHANG_SACHTHEODOI" EntitySet="KHACHHANG_SACHTHEODOI" />
+    </AssociationSet>
+    <AssociationSet Name="FK__KHACHHANG__maSac__6477ECF3" Association="Self.FK__KHACHHANG__maSac__6477ECF3">
+      <End Role="SACH" EntitySet="SACH" />
+      <End Role="KHACHHANG_SACHTHEODOI" EntitySet="KHACHHANG_SACHTHEODOI" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NOIDUNGSA__maSac__60A75C0F" Association="Self.FK__NOIDUNGSA__maSac__60A75C0F">
+      <End Role="SACH" EntitySet="SACH" />
+      <End Role="NOIDUNGSACH" EntitySet="NOIDUNGSACH" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SACH__maTheLoai__5DCAEF64" Association="Self.FK__SACH__maTheLoai__5DCAEF64">
+      <End Role="THELOAI" EntitySet="THELOAI" />
+      <End Role="SACH" EntitySet="SACH" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

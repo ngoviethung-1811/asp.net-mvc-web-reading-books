@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WEBDOCSACHModelStoreContainer" CdmEntityContainer="WEBDOCSACHEntities">
+    <EntitySetMapping Name="GIAODICH_MUASACH">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.GIAODICH_MUASACH">
+        <MappingFragment StoreEntitySet="GIAODICH_MUASACH">
+          <ScalarProperty Name="maKH" ColumnName="maKH" />
+          <ScalarProperty Name="maSach" ColumnName="maSach" />
+          <ScalarProperty Name="gia" ColumnName="gia" />
+          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GIAODICH_MUAVIP">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.GIAODICH_MUAVIP">
+        <MappingFragment StoreEntitySet="GIAODICH_MUAVIP">
+          <ScalarProperty Name="maKH" ColumnName="maKH" />
+          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+          <ScalarProperty Name="giaVIP" ColumnName="giaVIP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHACHHANGs">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.KHACHHANG">
+        <MappingFragment StoreEntitySet="KHACHHANG">
+          <ScalarProperty Name="maKH" ColumnName="maKH" />
+          <ScalarProperty Name="tenKH" ColumnName="tenKH" />
+          <ScalarProperty Name="avatar" ColumnName="avatar" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="matKhau" ColumnName="matKhau" />
+          <ScalarProperty Name="isVIP" ColumnName="isVIP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NHANVIENs">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.NHANVIEN">
+        <MappingFragment StoreEntitySet="NHANVIEN">
+          <ScalarProperty Name="maNV" ColumnName="maNV" />
+          <ScalarProperty Name="tenNV" ColumnName="tenNV" />
+          <ScalarProperty Name="avatar" ColumnName="avatar" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="matKhau" ColumnName="matKhau" />
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOIDUNGSACHes">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.NOIDUNGSACH">
+        <MappingFragment StoreEntitySet="NOIDUNGSACH">
+          <ScalarProperty Name="maSach" ColumnName="maSach" />
+          <ScalarProperty Name="maChuong" ColumnName="maChuong" />
+          <ScalarProperty Name="tenChuong" ColumnName="tenChuong" />
+          <ScalarProperty Name="noiDung" ColumnName="noiDung" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SACHes">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.SACH">
+        <MappingFragment StoreEntitySet="SACH">
+          <ScalarProperty Name="maSach" ColumnName="maSach" />
+          <ScalarProperty Name="maTheLoai" ColumnName="maTheLoai" />
+          <ScalarProperty Name="tenSach" ColumnName="tenSach" />
+          <ScalarProperty Name="anhBia" ColumnName="anhBia" />
+          <ScalarProperty Name="tacgia" ColumnName="tacgia" />
+          <ScalarProperty Name="loai" ColumnName="loai" />
+          <ScalarProperty Name="gia" ColumnName="gia" />
+          <ScalarProperty Name="namXuatBan" ColumnName="namXuatBan" />
+          <ScalarProperty Name="moTa" ColumnName="moTa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="THELOAIs">
+      <EntityTypeMapping TypeName="WEBDOCSACHModel.THELOAI">
+        <MappingFragment StoreEntitySet="THELOAI">
+          <ScalarProperty Name="maTheLoai" ColumnName="maTheLoai" />
+          <ScalarProperty Name="tenTheLoai" ColumnName="tenTheLoai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="KHACHHANG_SACHTHEODOI" TypeName="WEBDOCSACHModel.KHACHHANG_SACHTHEODOI" StoreEntitySet="KHACHHANG_SACHTHEODOI">
+      <EndProperty Name="KHACHHANG">
+        <ScalarProperty Name="maKH" ColumnName="maKH" />
+      </EndProperty>
+      <EndProperty Name="SACH">
+        <ScalarProperty Name="maSach" ColumnName="maSach" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="KhachHang_TimKiem" FunctionName="WEBDOCSACHModel.Store.KhachHang_TimKiem" />
+    <FunctionImportMapping FunctionImportName="NhanVien_TimKiem" FunctionName="WEBDOCSACHModel.Store.NhanVien_TimKiem" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="WEBDOCSACHModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="WEBDOCSACHModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="WEBDOCSACHModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="WEBDOCSACHModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WEBDOCSACHModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="WEBDOCSACHModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WEBDOCSACHModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="WEBDOCSACHModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="WEBDOCSACHModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

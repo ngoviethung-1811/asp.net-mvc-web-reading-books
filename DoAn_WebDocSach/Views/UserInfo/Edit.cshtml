@@ -1,0 +1,157 @@
+﻿@model DoAn_WebDocSach.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var fileupload = $("#Avatar");
+            var image = $("#FileUpload");
+            image.click(function () {
+                fileupload.click();
+            });
+            fileupload.change(function () {
+                var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+                document.getElementById("avatar").value = fileName;
+            });
+        });
+    </script>
+}
+
+<style>
+    label {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    input[type="file"] {
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 10px;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+    .cancel-button {
+        display: inline-block;
+        background-color: #ccc;
+        color: #333;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        margin: 10px;
+    }
+
+        .cancel-button:hover {
+            background-color: #999;
+            color: #fff;
+        }
+
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .form-input {
+        position: relative;
+        flex: 1;
+    }
+
+        .form-input .form-control {
+            float: right;
+            width: 500px;
+            padding: 12px;
+            margin-bottom: 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .form-input .form-file {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .text-danger {
+        margin-left: 10px;
+        color: #ff0000;
+    }
+</style>
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    @using (Html.BeginForm("Edit", "UserInfo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="content_page" style="background-color: ghostwhite; padding: 10px;">
+            <div class="card">
+                <h3 style="text-align: center;">CHỈNH SỬA THÔNG TIN CÁ NHÂN</h3>
+                <hr />
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.maKH)
+                    @Html.HiddenFor(model => model.email)
+                    @Html.HiddenFor(model => model.matKhau)
+                    @Html.HiddenFor(model => model.isVIP)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tenKH, "Tên", htmlAttributes: new { @class = "form-label" })
+                        <div class="form-input">
+                            @Html.EditorFor(model => model.tenKH, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.tenKH, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.avatar, "Avatar", htmlAttributes: new { @class = "form-label" })
+                        <div class="form-input">
+                            @Html.EditorFor(model => model.avatar, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.avatar, "", new { @class = "text-danger" })
+                            <input type="file" name="Avatar" id="Avatar" class="form-file" />
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <a class="cancel-button" href="/UserInfo/Index">Hủy</a>
+                        <input type="submit" value="Cập nhật" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+</div>

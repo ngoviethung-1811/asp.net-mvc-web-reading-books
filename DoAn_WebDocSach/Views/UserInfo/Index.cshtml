@@ -1,0 +1,161 @@
+﻿@model DoAn_WebDocSach.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .customer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .customer-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+        .customer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .customer-name {
+        font-size: 30px;
+        margin: 0;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .customer-email {
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .customer-vip {
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+        margin-top: 10px;
+        color: red;
+    }
+
+    .customer-actions {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .btn-edit,
+    .btn-change-password,
+    .btn-logout {
+        padding: 10px 20px;
+        background-color: #008CBA;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        min-width: 100px;
+    }
+
+        .btn-edit:hover,
+        .btn-change-password:hover,
+        .btn-logout:hover {
+            background-color: gray;
+            color: white;
+        }
+
+    .btn-logout {
+        background-color: blueviolet;
+    }
+
+    .btn-edit {
+        background-color: green;
+    }
+
+    .btn-up-vip {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: red;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        min-width: 100px;
+    }
+
+        .btn-up-vip:hover {
+            background-color: gray;
+            color: white;
+        }
+</style>
+
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class="content_page" style="background-color: ghostwhite; padding: 10px;">
+        <div class="customer-info">
+            <div class="customer-image">
+                <img src="~/Images/@Model.avatar" alt="Avatar" />
+            </div>
+            <div class="customer-details">
+                <h2 class="customer-name">@Model.tenKH</h2>
+                <p class="customer-email">@Model.email</p>
+                @if (Model.isVIP)
+                {
+                    <p class="customer-vip">VIP</p>
+                }
+                else
+                {
+                    <div class="customer-actions">
+                        <a class="btn-up-vip" href="@Url.Action("NangCapVIP", "UserInfo")">Nâng cấp lên tài khoản VIP</a>
+                    </div>
+                }
+                <div class="customer-actions">
+                    <a href="@Url.Action("Edit", "UserInfo")" class="btn-edit">Chỉnh sửa thông tin cá nhân</a>
+                    <a href="@Url.Action("DoiMK", "UserInfo")" class="btn-change-password">Đổi mật khẩu</a>
+                    <a href="#" class="btn-logout">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<form id="logout-form" action="@Url.Action("Logout", "UserLogout")" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+    const logoutButton = document.querySelector('.btn-logout');
+
+    logoutButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn đăng xuất?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đăng xuất',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    });
+</script>

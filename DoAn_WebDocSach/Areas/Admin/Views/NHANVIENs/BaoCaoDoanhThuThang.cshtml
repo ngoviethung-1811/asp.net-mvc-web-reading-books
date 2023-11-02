@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "BaoCaoDoanhThuThang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var gridGDS = new WebGrid(source: Model.ListGDS, canPage: true, rowsPerPage: 10);
+    var gridGDV = new WebGrid(source: Model.ListGDV, canPage: true, rowsPerPage: 10);
+
+}
+
+<html>
+<head>
+    <style type="text/css">
+        .grid-footer {
+            color: #000;
+            font: 17px Calibri;
+            text-align: center;
+            font-weight: bold;
+        }
+
+            .grid-footer a {
+                background-color: #ffffff;
+                color: blue;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                padding: 1px 10px 2px 10px;
+            }
+
+        .alternatingRowStyle {
+            background-color: aliceblue;
+        }
+
+        table .table1 {
+            text-align: left;
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 800px;
+        }
+
+        .table thead th {
+            text-align: center;
+        }
+
+        .tr, .td {
+            text-align: left;
+        }
+
+        .TieuDe {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .nutBam {
+            text-align: center;
+            margin: 10px;
+        }
+
+        td {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("BaoCaoDoanhThuThang", "NHANVIENs", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+
+            <h3 class="TieuDe">BÁO CÁO DOANH THU</h3>
+            <table class="table1" align="center">
+                <tr>
+                    <td>Thời gian bắt đầu</td>
+                    <td>
+                        @Html.DropDownList("month1", null, htmlAttributes: new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DropDownList("year1", null, htmlAttributes: new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Thời gian kết thúc</td>
+                    <td>
+                        @Html.DropDownList("month2", null, htmlAttributes: new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DropDownList("year2", null, htmlAttributes: new { @class = "form-control" })
+                    </td>
+                </tr>
+            </table>
+            <div class="nutBam">
+                <input type="button" name="Thoat" value="Thoát" style="margin-left: 5px;width:100px;
+                background-color: red;color:white; float:left" onclick="location.href='@Url.Action("Index", "Home")'" />
+                <input type="submit" name="submit" value="Lập báo cáo" style="margin-left: 5px; width: 150px; background-color: #1a66ff; color: white;font-weight:bold;" />
+                <input type="button" name="Nhapmoi" value="Nhập mới" style="margin-left: 5px; width: 150px; background-color: #1a66ff; color: white; font-weight: bold;" onclick="location.href='@Url.Action("BaoCaoDoanhThuThang", "NHANVIENs")'" />
+                <input type="submit" name="InBC" value="In báo cáo" style="margin-left: 5px;width:100px;
+                background-color: green;color:white; float:right" />
+            </div>
+        }
+    </div>
+    <h4 class="TieuDe">DOANH THU KHÁCH HÀNG MUA SÁCH BẢN QUYỀN</h4>
+    <div id="gridContent">
+        @gridGDS.GetHtml(
+                 tableStyle: "table table-bordered table-hover",
+                 footerStyle: "grid-footer",
+                 fillEmptyRows: true,
+                 mode: WebGridPagerModes.Numeric,
+                 alternatingRowStyle: "alternatingRowStyle",
+                 columns: new[]  // colums in grid
+                  {
+                gridGDS.Column("STT",format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(gridGDS.TotalRowCount / gridGDS.PageCount) / gridGDS.RowsPerPage) * gridGDS.RowsPerPage * gridGDS.PageIndex),
+                gridGDS.Column("thoiGian", "Thời gian", format: item => item.thoiGian.ToString("dd/MM/yyyy")),
+                gridGDS.Column("KHACHHANG.tenKH", "Khách hàng"),
+                gridGDS.Column("SACH.tenSach", "Sách"),
+                gridGDS.Column("gia", "Giá",format:@<text> @item.gia.ToString("#,##0")</text>),
+         }
+                         )
+        <div class="grid-footer">
+            <strong>Tổng: @string.Format("{0:#,##0}", ViewBag.TongGDS)</strong>
+        </div>
+    </div>
+    <h4 class="TieuDe">DOANH THU KHÁCH HÀNG MUA VIP</h4>
+    <div id="gridContent">
+        @gridGDV.GetHtml(
+                 tableStyle: "table table-bordered table-hover",
+                 footerStyle: "grid-footer",
+                 fillEmptyRows: true,
+                 mode: WebGridPagerModes.Numeric,
+                 alternatingRowStyle: "alternatingRowStyle",
+                 columns: new[]  // colums in grid
+                  {
+                gridGDV.Column("STT",format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(gridGDV.TotalRowCount / gridGDV.PageCount) / gridGDV.RowsPerPage) * gridGDV.RowsPerPage * gridGDV.PageIndex),
+                gridGDV.Column("thoiGian", "Thời gian", format: item => item.thoiGian.ToString("dd/MM/yyyy")),
+                gridGDV.Column("KHACHHANG.tenKH", "Khách hàng"),
+                gridGDV.Column("giaVIP", "Giá VIP",format:@<text> @item.giaVIP.ToString("#,##0")</text>),
+         }
+                         )
+        <div class="grid-footer">
+            <strong>Tổng: @string.Format("{0:#,##0}", ViewBag.TongGDV)</strong>
+        </div>
+        <div class="grid-footer" style="font-size:30px">
+            <strong>Tổng doanh thu: @string.Format("{0:#,##0}", ViewBag.TongDoanhThu)</strong>
+        </div>
+    </div>
+</body>
+</html>

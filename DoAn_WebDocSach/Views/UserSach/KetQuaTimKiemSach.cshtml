@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DoAn_WebDocSach.Models.SACH>
+@{
+    ViewBag.Title = "KetQuaTimKiemSach";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="container">
+    <div class="line"></div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <div>
+                <center>
+                    <a href="/UserHome/Index" target="_blanks">
+                        <img src="~/Images/layout_user_header_img.jpg" />
+                    </a>
+                </center>
+            </div>
+            <br />
+            <div class='content_page pd-20'>
+                <h1 class="title_page" style="font-size:15px"><b style="font-size:20px">@ViewBag.TT:</b> @ViewBag.KQ</h1>                <br />
+                @{
+                    var count = 0;
+                }
+                @foreach (var sach in Model)
+                {
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <a href="@Url.Action("ViewBookInfo", "UserSach", new { id = sach.maSach })">
+                                <img src='~/Images/@sach.anhBia' style="width: 100%;">
+                            </a>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                            <a href="@Url.Action("ViewBookInfo", "UserSach", new { id = sach.maSach })">
+                                <h1 class='tblue fs-20'>@sach.tenSach</h1>
+                            </a>
+                            <div class='mg-t-10'>Tác giả:  @sach.tacgia</div>
+                            <div class='mg-tb-10'>
+                                Thể loại:
+                                <a class='tblue' href="@Url.Action("Sach_TheLoai", "UserSach", new { maTheLoai = sach.maTheLoai })">
+                                    @sach.THELOAI.tenTheLoai
+                                </a>
+                            </div>
+                            <div class='mg-tb-10'>
+                                Loại:
+                                <a class='tblue' href="@Url.Action("TimKiem_SachLoai", "UserSach", new { loai = sach.loai })">
+                                    @if (sach.loai == 0)
+                                    {
+                                            <span>Thường</span>
+                                    }
+                                    else if (sach.loai == 1)
+                                    {
+                                        <span>VIP</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Bản quyền</span>
+                                    }
+                                </a>
+                            </div>
+                            <div class='mg-tb-10'>
+                                &#128065; @ViewBag.SoLuotXemList[count++]
+                            </div>
+                        </div>
+                    </div>
+                    <div class='mg-tb-15'>
+                        <div class='line'></div>
+                    </div>
+
+                }
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class=''>
+                <center>
+                    <a href="/UserHome/Index" target="_blanks">
+                        <img src="~/Images/layout_user_header_img2.jpg" />
+                    </a>
+                </center>
+            </div>
+            <br />
+            <div class='content_page'>
+                <div class="title_page">Thể Loại Sách</div>
+                @foreach (var theLoai in ViewBag.DanhSachTheLoai)
+                {
+                    <div class='item_folder_sidebar'>
+                        <a href="@Url.Action("Sach_TheLoai", "UserSach", new { maTheLoai = theLoai.maTheLoai })">
+                            @theLoai.tenTheLoai
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

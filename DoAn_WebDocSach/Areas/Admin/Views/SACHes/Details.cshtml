@@ -1,0 +1,104 @@
+﻿@model DoAn_WebDocSach.Models.SACH
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    string loai = "";
+}
+
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background-color: #f2f2f2;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            margin: 0;
+            color: black;
+        }
+
+        th {
+            padding: 8px;
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<h4 style="color:black;text-align:center">Thông tin chi tiết</h4>
+<table border="1" cellpadding="0" cellspacing="0" style="font-size:14px;margin-left:50px;">
+    <tr>
+        <td>
+            <table cellpadding="2" cellspacing="10">
+                <tr>
+                    <td rowspan="7" style="text-align:center"><img src="/Images/@Html.DisplayFor(model => model.anhBia)" width="150" height="150" /></td>
+                    <td>Mã sách:</td>
+                    <td>@Html.DisplayFor(model => model.maSach)</td>
+                </tr>
+                <tr>
+                    <td>Tên sách:</td>
+                    <td>@Html.DisplayFor(model => model.tenSach)</td>
+                </tr>
+                <tr>
+                    <td>Tác giả:</td>
+                    <td>@Html.DisplayFor(model => model.tacgia)</td>
+                </tr>
+                <tr>
+                    <td>Loại sách:</td>
+                    <td>
+                        @{if (Model.loai == 0)
+                            {
+                                loai = "Thường";
+                            }
+                            else
+                            {
+                                if (Model.loai == 1)
+                                {
+                                    {
+                                        loai = "Vip";
+                                    }
+                                }
+                                else
+                                {
+                                    loai = "Bản quyền";
+                                }
+                            }
+
+                        }
+                        @Html.Raw(loai)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Giá:</td>
+                    <td>@Html.DisplayFor(model => model.gia)</td>
+                </tr>
+                <tr>
+                    <td>Năm xuất bản:</td>
+                    <td>@Html.DisplayFor(model => model.namXuatBan)</td>
+                </tr>
+                <tr>
+                    <td>Thể loại:</td>
+                    <td>@Html.DisplayFor(model => model.THELOAI.tenTheLoai)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">Mô tả:</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="vertical-align:top; padding-top:8px; white-space: pre-line;">@Html.DisplayFor(model => model.moTa)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p style="margin-left:50px;">
+    <br />
+    @Html.ActionLink("Cập nhật", "Edit", new { id = Model.maSach }) |
+    @Html.ActionLink("Quay lại", "Index")
+</p>
